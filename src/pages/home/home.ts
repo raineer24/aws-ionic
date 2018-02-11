@@ -34,4 +34,14 @@ export class HomePage {
       });
   }
 
+  deleteImage(index){
+    let toRemove = this.images.splice(index, 1);
+    this.awsProvider.deleteFile(toRemove[0]['key']).subscribe(res => {
+      let toast = this.toastCtrl.create({
+        message: res['msg'],
+        duration: 2000
+      });
+    })
+  }
+
 }
