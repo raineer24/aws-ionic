@@ -17,4 +17,21 @@ export class HomePage {
 
   }
 
+  ionViewWillEnter() {
+    this.loadImages();
+  }
+  loadImages() {
+      this.images = [];
+      this.awsProvider.getFileList().subscribe(files => {
+          for (let name of files) {
+            this.awsProvider.getSignedFileRequest(name).subscribe(res => {
+                this.images.push({
+                  key: name,
+                  url: res
+                })
+            });
+          }
+      });
+  }
+
 }
