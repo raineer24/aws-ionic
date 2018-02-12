@@ -1,14 +1,31 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
-      Ionic Blank
+      Ionic Aws
     </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="edit = !edit">
+          <ion-icon name="unlock" *ngIf="edit"></ion-icon>
+          <ion-icon name="lock" *ngIf="!edit"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+    <h3 [hidden]="images.length !== 0" text-center>No Images found!</h3>
+ <ion-list>
+   <ion-card *ngFor="let img of images; let i = index">
+     <img src="img.url">
+     <button ion-button full color="danger" [style.margin]="g" *ngIf="edit" (click)="deleteImage(i)">
+       <ion-icon name="trash"></ion-icon>
+     </button>
+
+   </ion-card>
+ </ion-list>
+ <ion-fab right bottom>
+   <button ion-fab (click)="presentActionSheet()">
+     <ion-icon name="camera"></ion-icon>
+   </button>
+ </ion-fab>
 </ion-content>
