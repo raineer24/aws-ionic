@@ -5,26 +5,21 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 @Injectable()
 export class AwsProvider {
-  apiUrl = "http://localhost:5000/";
+  apiUrl = 'http://localhost:5000/';
 
   constructor(public http: Http) {}
   getSignedUploadRequest(name, type) {
-    return this.http
-      .get(`${this.apiUrl}aws/sign?file-name=${name}&file-type`)
-      .map(res => res.json());
+    return this.http.get(`${this.apiUrl}aws/sign?file-name=${name}&file-type=${type}`).map(res => res.json());
   }
   getFileList(): Observable<Array<any>> {
-    return this.http
-      .get(`${this.apiUrl}aws/files`)
+    return this.http.get(`${this.apiUrl}aws/files`)
       .map(res => res.json())
       .map(res => {
         return res["Contents"].map(val => val.Key);
       });
   }
   getSignedFileRequest(name) {
-    return this.http
-      .get(`${this.apiUrl}aws/files${name}`)
-      .map(res => res.json());
+    return this.http.get(`${this.apiUrl}aws/files/${name}`).map(res => res.json());
   }
   deleteFile(name) {
     return this.http
